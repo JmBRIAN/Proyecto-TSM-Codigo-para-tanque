@@ -1,0 +1,30 @@
+﻿#include <WiFi.h>
+
+
+WiFiServer server(8888);
+WiFiClient client;
+
+
+void setup() {
+  Serial.begin(115200);
+  WiFi.softAP("Tanque_WIFI", "12345678");
+  server.begin();
+  Serial.println("Servidor WiFi iniciado");
+}
+
+
+void loop() {
+  if (!client || !client.connected()) {
+    client = server.available();
+    return;
+  }
+
+
+  if (client.available()) {
+    String mensaje = client.readStringUntil('\n');
+    Serial.println("Recibido: " + mensaje);
+  }
+
+
+  delay(10);
+}

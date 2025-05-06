@@ -1,0 +1,51 @@
+﻿using UnityEngine;
+using UnityEngine.UI;
+
+
+public class AmmoManager : MonoBehaviour
+{
+    public int municionTotal = 0;
+    public int cargador = 5;
+    public int capacidadCargador = 5;
+    public Text textoMunicion;
+
+
+    void Start()
+    {
+        ActualizarTexto();
+    }
+
+
+    public void RecogerMunicion(int cantidad)
+    {
+        municionTotal += cantidad;
+        ActualizarTexto();
+    }
+
+
+    public bool Disparar()
+    {
+        if (cargador > 0)
+        {
+            cargador--;
+            ActualizarTexto();
+            return true;
+        }
+        return false;
+    }
+
+
+    public void Recargar()
+    {
+        int recarga = Mathf.Min(capacidadCargador - cargador, municionTotal);
+        cargador += recarga;
+        municionTotal -= recarga;
+        ActualizarTexto();
+    }
+
+
+    void ActualizarTexto()
+    {
+        textoMunicion.text = $"Balas: {cargador} / {municionTotal}";
+    }
+}

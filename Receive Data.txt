@@ -1,0 +1,51 @@
+﻿const int pinR = 14;
+const int pinG = 12;
+const int pinB = 13;
+const int motorPin = 4;
+
+
+int vida = 100;
+
+
+void setup() {
+  Serial.begin(115200);
+  pinMode(pinR, OUTPUT);
+  pinMode(pinG, OUTPUT);
+  pinMode(pinB, OUTPUT);
+  pinMode(motorPin, OUTPUT);
+}
+
+
+void loop() {
+  if (Serial.available()) {
+    String mensaje = Serial.readStringUntil('\n');
+
+
+    if (mensaje.startsWith("VIDA:")) {
+      vida = mensaje.substring(5).toInt();
+      actualizarLED();
+    } else if (mensaje == "VIBRAR" || mensaje == "RECOGIDO") {
+      digitalWrite(motorPin, HIGH);
+      delay(200);
+      digitalWrite(motorPin, LOW);
+    }
+  }
+}
+
+
+void actualizarLED() {
+  if (vida > 70) {
+    setRGB(0, 255, 0);  // Verde: vida alta
+  } else if (vida <= 30) {
+    setRGB(255, 0, 0);  // Rojo: vida baja
+  } else {
+    setRGB(0, 0, 255);  // Azul: vida media
+  }
+}
+
+
+void setRGB(int r, int g, int b) {
+  analogWrite(pinR, 255 - r);
+  analogWrite(pinG, 255 - g);
+  analogWrite(pinB, 255 - b);
+}

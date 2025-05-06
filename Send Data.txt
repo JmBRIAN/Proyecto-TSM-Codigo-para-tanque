@@ -1,0 +1,37 @@
+﻿const int joy1X = 34;
+const int joy1Y = 35;
+const int joy2X = 32;
+const int joy2Y = 33;
+
+
+const int btnDisparo = 25;
+const int btnPausa = 26;
+const int btnRecarga = 27;
+
+
+void setup() {
+  Serial.begin(115200);
+  pinMode(btnDisparo, INPUT_PULLUP);
+  pinMode(btnPausa, INPUT_PULLUP);
+  pinMode(btnRecarga, INPUT_PULLUP);
+}
+
+
+void loop() {
+  int x1 = analogRead(joy1X);
+  int y1 = analogRead(joy1Y);
+  int x2 = analogRead(joy2X);
+  int y2 = analogRead(joy2Y);
+
+
+  String data = "JOY1:" + String(x1) + "," + String(y1) + ";JOY2:" + String(x2) + "," + String(y2);
+
+
+  if (!digitalRead(btnDisparo)) data += ";DISPARO";
+  if (!digitalRead(btnPausa)) data += ";PAUSA";
+  if (!digitalRead(btnRecarga)) data += ";RECARGA";
+
+
+  Serial.println(data);
+  delay(50);
+}

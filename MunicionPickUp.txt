@@ -1,0 +1,18 @@
+﻿using UnityEngine;
+
+
+public class MunicionPickup : MonoBehaviour
+{
+    public int cantidad = 5;
+
+
+    void OnTriggerEnter(Collider other)
+    {
+        AmmoManager ammo = other.GetComponent<AmmoManager>();
+        if (ammo != null)
+        {
+            ammo.RecogerMunicion(cantidad);
+            Destroy(gameObject);
+        }
+    }
+}

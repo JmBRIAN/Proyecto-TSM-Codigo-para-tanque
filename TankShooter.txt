@@ -1,0 +1,22 @@
+﻿using UnityEngine;
+
+
+public class TankShooter : MonoBehaviour
+{
+    public GameObject balaPrefab;
+    public Transform puntoDeDisparo;
+    public AmmoManager ammoManager;
+
+
+    public void IntentarDisparo()
+    {
+        if (ammoManager.Disparar())
+        {
+            Instantiate(balaPrefab, puntoDeDisparo.position, puntoDeDisparo.rotation);
+        }
+        else
+        {
+            Debug.Log("Sin balas en el cargador.");
+        }
+    }
+}

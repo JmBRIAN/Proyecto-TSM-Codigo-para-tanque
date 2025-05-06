@@ -1,0 +1,39 @@
+﻿using UnityEngine;
+using UnityEngine.UI;
+
+
+public class PlayerHealth : MonoBehaviour
+{
+    public int maxVida = 100;
+    public int vidaActual;
+    public Slider barraDeVida;
+
+
+    void Start()
+    {
+        vidaActual = maxVida;
+        barraDeVida.maxValue = maxVida;
+        barraDeVida.value = vidaActual;
+    }
+
+
+    public void TomarDanio(int cantidad)
+    {
+        vidaActual -= cantidad;
+        vidaActual = Mathf.Clamp(vidaActual, 0, maxVida);
+        barraDeVida.value = vidaActual;
+
+
+        if (vidaActual <= 0)
+        {
+            // Aquí puedes agregar efectos de muerte
+            Debug.Log("Tanque destruido");
+        }
+    }
+
+
+    public int ObtenerVidaActual()
+    {
+        return vidaActual;
+    }
+}

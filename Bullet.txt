@@ -1,0 +1,29 @@
+﻿using UnityEngine;
+
+
+public class Bullet : MonoBehaviour
+{
+    public float velocidad = 20f;
+    public int danio = 10;
+    public Rigidbody rb;
+
+
+    void Start()
+    {
+        rb.velocity = transform.forward * velocidad;
+        Destroy(gameObject, 5f);
+    }
+
+
+    void OnCollisionEnter(Collision col)
+    {
+        PlayerHealth enemigo = col.collider.GetComponent<PlayerHealth>();
+        if (enemigo != null)
+        {
+            enemigo.TomarDanio(danio);
+        }
+
+
+        Destroy(gameObject);
+    }
+}
